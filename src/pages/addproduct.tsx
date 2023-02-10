@@ -151,14 +151,15 @@ const Addproduct: NextPage = () => {
                           <Input
                             id="productname"
                             name="productname"
-                            label="Owner' Address"
+                            label="Owner's Address"
                             placeholder="Enter Your Address"
                             onChange={handleData}
                           />
 
-                          <Textarea
+                          <Input
                             id="description"
                             name="description"
+                            type="textarea"
                             label="Description"
                             placeholder="Description"
                             onChange={handleData}
@@ -167,7 +168,6 @@ const Addproduct: NextPage = () => {
                             id="description"
                             name="description"
                             label="Property dimensions"
-                            type="textarea"
                             placeholder="Enter the dimensions of your land"
                             onChange={handleData}
                           />

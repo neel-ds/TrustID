@@ -61,7 +61,7 @@ const Home: NextPage = () => {
             </div>
           </div>
           <div className="md:flex hidden my-auto w-[30%] md:w-[60%] ml-10 items-end">
-            <Image src="/vector.png" width="500" height="500" className='ml-10' alt="Banner" />
+            <Image src="/vector.png" width="600" height="500" className='ml-10' alt="Banner" />
           </div>
         </div>
 
