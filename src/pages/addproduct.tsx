@@ -148,7 +148,7 @@ const Addproduct: NextPage = () => {
       </Head>
       <main className="px-4 md:px-0 my-8 mx-auto max-w-[1080px]">
         <div className="pt-5 pb-5 mx-auto max-w-7xl">
-          <Header heading="Add Land Information" />
+          <Header heading="Create Record of Rights" />
           <div className="flex flex-col w-full text-center">
             <div className="flex justify-center w-full py-4 overflow-x-hidden overflow-y-auto md:inset-0 md:h-full">
               <div className="relative w-full h-full md:h-auto">
@@ -162,7 +162,7 @@ const Addproduct: NextPage = () => {
                             name="productid"
                             label="Owner's name "
                             type="text"
-                            placeholder="Enter Your name"
+                            placeholder="Enter Your Name"
                             onChange={e => useStore.setState(e.target.value)}
                           />
                           <Input
@@ -194,14 +194,14 @@ const Addproduct: NextPage = () => {
                             id="Location"
                             name="Location"
                             label="Land Area"
-                            placeholder="location"
+                            placeholder="Location"
                             onChange={handleData}
                           />
                           <Input
                             id=""
                             name=""
                             label="PIN Code"
-                            placeholder="Enter land area pin code"
+                            placeholder="Enter Landmark PIN Code"
                             type="number"
                             onChange={handleData}
                           />
@@ -231,7 +231,7 @@ const Addproduct: NextPage = () => {
                               }}
                             />
                             <Image
-                              src={image !== "" ? image : "/previewIcon.png"}
+                              src={image !== "" ? image : "/preview.png"}
                               alt="preview"
                               width={200}
                               height={200}
@@ -240,7 +240,7 @@ const Addproduct: NextPage = () => {
                         </div>
                       </div>
                       <div className="max-w-[200px] flex m-auto">
-                        <Button label="Register Land" onClick={onOpen} />
+                        <Button label="Register RoR" onClick={onOpen} />
                         <Modal onClose={onClose} isOpen={isOpen} isCentered>
                           <ModalOverlay />
                           <ModalContent>

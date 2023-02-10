@@ -33,8 +33,8 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>SSIP</title>
-        <meta name="description" content="TrustChain" />
+        <title>TrustID</title>
+        <meta name="description" content="TrustID" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -44,7 +44,7 @@ const Home: NextPage = () => {
             <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl">
               <span className="block text-gray-800 xl:inline dark:text-white">Welcome to</span>
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#8b00ff] to-[#a75eff] dark:from-[#8c2bff] dark:to-[#d97dff] pb-4">
-                Land Registry
+                TrustID
               </span>
               <span className="block font-semibold text-gray-700 dark:text-[#e99aff] font-medium text-2xl">
                 Decentralized Application
@@ -55,7 +55,7 @@ const Home: NextPage = () => {
             </p>
             <div className="mt-5 sm:mt-8 sm:flex lg:justify-start md:flex-col lg:flex-row">
               <div>
-                <Link href="/explore" className="w-full md:w-[70%] lg:w-full flex items-center justify-center px-8 py-3 border-0 border-transparent text-base font-medium rounded-3xl text-white bg-gradient-to-r from-[#a13bf7] to-[#7500ff] hover:drop-shadow-[0_3px_5px_#7d7d7d] dark:hover:drop-shadow-[0_3px_5px_#8ce1ff] md:py-2 md:text-lg md:px-8"
+                <Link href="/kyc" className="w-full md:w-[70%] lg:w-full flex items-center justify-center px-8 py-3 border-0 border-transparent text-base font-medium rounded-3xl text-white bg-gradient-to-r from-[#a13bf7] to-[#7500ff] hover:drop-shadow-[0_3px_5px_#7d7d7d] dark:hover:drop-shadow-[0_3px_5px_#8ce1ff] md:py-2 md:text-lg md:px-8"
                   >Explore</Link>
               </div>
             </div>
@@ -72,9 +72,9 @@ const Home: NextPage = () => {
             </h1>
           </div>
           <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-3 md:gap-x-8 md:gap-y-10">
-            <FeatureCard icon={<BsFillFileEarmarkLockFill size={25} />} title="Zero-knowledge Proof" desc="Products are operated only by authorized entity leveraging Polygon ID. It adds extra security layer over role's permission." />
-            <FeatureCard icon={<MdSecurity size={25} />} title="Security" desc="Everything on-chain! Prevent any forgery and errors while authenticating a product. No one can change provenance except the authorized person." />
-            <FeatureCard icon={<BsFillCheckCircleFill size={25} />} title="Verification" desc="It also ensures that the right person is adding or updating the product. User can explore the listed products and check the provenance." />
+            <FeatureCard icon={<BsFillFileEarmarkLockFill size={25} />} title="Zero-knowledge Proof" desc="Transactions are operated only by authorized entity leveraging self-sovereign identity(SSI). It adds extra security layer over personhood verfification." />
+            <FeatureCard icon={<MdSecurity size={25} />} title="Security" desc="Everything on-chain! Prevent any forgery and errors while verifying a claim. No one can change provenance except the authorized person." />
+            <FeatureCard icon={<BsFillCheckCircleFill size={25} />} title="Verification" desc="It also ensures that the right person is performing transaction or deal of the land. User can claim the decentralized identity(DID) after KYC process." />
           </dl>
         </div>
       </main>
