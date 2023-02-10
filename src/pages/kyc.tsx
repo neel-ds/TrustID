@@ -188,10 +188,10 @@ const Kyc: NextPage = () => {
                           height={150}
                         />
                         <div>
-                          <div className="flex mb-5 space-x-5 text-gray-100">
+                          <div className="flex mb-5 space-x-5 text-gray-700 dark:text-gray-100">
                             DOB: {dob}
                           </div>
-                          <div className="flex space-x-5 text-gray-100">
+                          <div className="flex space-x-5 text-gray-700 dark:text-gray-100">
                             Aadhar: {aadhar}
                           </div>
                         </div>
