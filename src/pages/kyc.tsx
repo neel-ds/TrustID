@@ -5,7 +5,7 @@ import Head from "next/head";
 import Button from "../components/form-elements/button";
 import FileUpload from "../components/form-elements/file-upload";
 import Header from "../components/form-components/Header";
-import { useToast } from "@chakra-ui/react";
+import { Input, useToast } from "@chakra-ui/react";
 import { Image } from "@chakra-ui/react";
 import jwt_decode from "jwt-decode";
 
@@ -132,14 +132,14 @@ const Kyc: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="px-4 md:px-0 mx-auto max-w-[1080px]">
-        <div className="max-w-7xl mt-5 pt-5 pb-5 mx-auto">
+        <div className="pt-5 pb-5 mx-auto mt-5 max-w-7xl">
           <Header heading="Claim DID" />
-          <div className="flex flex-col md:flex-row w-full text-center">
-            <div className="w-full md:w-1/2 mb-10 md:mb-0 md:p-4 overflow-x-hidden overflow-y-auto md:inset-0 justify-center flex md:h-full">
+          <div className="flex flex-col w-full text-center md:flex-row">
+            <div className="flex justify-center w-full mb-10 overflow-x-hidden overflow-y-auto md:w-1/2 md:mb-0 md:p-4 md:inset-0 md:h-full">
               <div className="relative w-full h-full md:h-auto ">
                 <div className="relative bg-white rounded-lg shadow backdrop-blur-lg bg-opacity-20 dark:bg-gray-700 dark:bg-opacity-20">
-                  <div className="px-6 py-6 lg:px-8">
-                    <form className="space-y-6">
+                  <div className="px-6 py-10 lg:px-8">
+                    <form className="space-y-10 ">
                       <FileUpload
                         id="productimage"
                         name="productimage"
@@ -180,13 +180,23 @@ const Kyc: NextPage = () => {
                             .catch((err) => console.error(err));
                         }}
                       />
-                      <Image
-                        src={image !== "" ? image : "/preview.png"}
-                        alt="preview"
-                        width={150}
-                        height={150}
-                      />
-                      <div className="max-w-[200px] flex m-auto">
+                      <div className="flex space-x-5">
+                        <Image
+                          src={image !== "" ? image : "/preview.png"}
+                          alt="preview"
+                          width={150}
+                          height={150}
+                        />
+                        <div>
+                          <div className="flex mb-5 space-x-5 text-gray-100">
+                            DOB: {dob}
+                          </div>
+                          <div className="flex space-x-5 text-gray-100">
+                            Aadhar: {aadhar}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="max-w-[200px] space-x-5 m-auto">
                         <Button
                           label="Submit"
                           onClick={(e) => {
