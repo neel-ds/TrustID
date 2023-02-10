@@ -43,10 +43,10 @@ const Header = () => {
           <Link href="/" className="flex items-center flex-1">
             <span className="flex flex-row items-center self-center text-xl font-bold whitespace-nowrap text-[#9504ff] hover:text-[#a137df] dark:text-[#c26fff]">
               <Image
-                src="/trustChainLogo.png"
-                width="60"
-                height="60"
-                className="mr-4"
+                src="/trustID.png"
+                width="50"
+                height="50"
+                className="mr-2 my-2"
                 alt="TrustIDLogo"
               />
               TrustID

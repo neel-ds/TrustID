@@ -33,7 +33,7 @@ const FileUpload = ({
           id={id}
           name={name}
           type={type}
-          className="opacity-0 absolute left-0 max-w-[110px]"
+          className="opacity-0 absolute left-0 max-w-auto"
           accept={accept}
           onChange={onChange}
         />
