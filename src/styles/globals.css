@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Timeline css */
+
+.timeline:before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  left: 30%;
+  width: 2px;
+  top: -20px;
+  background: #a13bf7;
+  z-index: 1;
+}
+.timeline {
+  position: relative;
+  margin: 10px auto;
+  width: 1000px;
+  padding: 20px 0;
+}
+.timeline ul {
+  margin: 0;
+  padding: 0;
+}
+
+.timeline ul li {
+  list-style: none;
+  box-sizing: border-box;
+  line-height: normal;
+  position: relative;
+  width: 30%;
+  padding: 20px;
+}
+
+.timeline ul li .right_content h2 {
+  padding: 0px 2px 18px 0px;
+}
+.timeline ul li {
+  float: left;
+  text-align: right;
+  clear: both;
+}
+
+.left_content {
+  padding-bottom: 20px;
+}
+
+.timeline ul li:before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #a13bf7;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px #a13bf7;
+  right: -6px;
+  top: 24px;
+  z-index: 1;
+}
+
+.timeline ul li .left_content {
+  position: absolute;
+  top: 12px;
+  right: -205px;
+  margin: 0;
+  padding: 8px 16px;
+
+  color: #fff;
+  box-shadow: 0 0 0 3px #a13bf7;
+  border-radius: 18px;
+}
+
+@media (max-width: 1000px) {
+  .timeline {
+    width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .timeline {
+    width: 100%;
+  }
+  .timeline:before {
+    left: 20px;
+  }
+  .timeline ul li {
+    width: 100%;
+    text-align: left;
+    padding-left: 50px;
+    margin-bottom: 20px;
+  }
+
+  .timeline ul li:before {
+    top: -18px;
+    left: 16px;
+  }
+  .timeline ul li .left_content {
+    top: -30px;
+    left: 50px;
+    right: inherit;
+  }
+}
