@@ -10,6 +10,7 @@ import trustchainABI from "../contracts/trustchain.json";
 import { useContractRead } from "wagmi";
 import { useRouter } from "next/router";
 import { CONTRACT_ADDRESS } from "../utils/contractAddress";
+import Usestore from '../components/store';
 
 interface ProductDetails {
   name: string;
@@ -37,6 +38,9 @@ const Producthistory: NextPage = () => {
   });
 
   useEffect(() => {
+    Usestore.setState({name: 'rjrjrjrjr'});
+    console.log(Usestore.getState().name);
+
     if ((data as ProductDetails) && !isLoading) {
       const {
         name,

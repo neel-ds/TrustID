@@ -11,7 +11,7 @@
   "dependencies": {
     "@chakra-ui/icon": "^3.0.15",
     "@chakra-ui/icons": "^2.0.16",
-    "@chakra-ui/react": "^2.4.6",
+    "@chakra-ui/react": "^2.4.9",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@next/font": "13.1.1",
@@ -32,7 +32,8 @@
     "react-qr-svg": "^2.4.0",
     "typescript": "4.9.4",
     "wagmi": "^0.10.8",
-    "web3.storage": "^4.4.0"
+    "web3.storage": "^4.4.0",
+    "zustand": "^4.3.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",

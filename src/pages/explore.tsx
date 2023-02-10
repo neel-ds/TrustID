@@ -5,6 +5,7 @@ import { useContractRead } from "wagmi";
 import { useEffect, useState } from "react";
 import contractABI from "../contracts/trustchain.json";
 import { CONTRACT_ADDRESS } from "../utils/contractAddress";
+import Usestore from '../components/store';
 
 export default function Products() {
   interface ProductDetails {
@@ -26,6 +27,7 @@ export default function Products() {
   });
 
   useEffect(() => {
+    console.log(Usestore.getState().name);
     if ((data as ProductDetails[]) && !isLoading) {
       let products = [];
       for (let product of data as ProductDetails[]) {
