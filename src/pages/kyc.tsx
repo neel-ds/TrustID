@@ -199,7 +199,7 @@ const Kyc: NextPage = () => {
                       <div className="max-w-[200px] space-x-5 m-auto">
                         <Button
                           label="Submit"
-                          onClick={(e) => {
+                          onClick={(e:any) => {
                             e.preventDefault();
                             handleResults({
                               IDNUMBER: aadhar,
