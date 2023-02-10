@@ -10,7 +10,7 @@ const ProductDetail = ({
   value: string;
   type?: string;
 }) => {
-  if (value === "" || value === undefined) value = "/registerVector.png";
+  if (value === "" || value === undefined) value = "/banner.png";
   return (
     <div className="flex flex-row">
       {type === "image" ? (

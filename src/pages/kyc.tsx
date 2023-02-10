@@ -219,10 +219,10 @@ const Kyc: NextPage = () => {
             </div>
             <div>
               <Image
-                src="/register.png"
-                className="rounded-full"
+                src="/reg.png"
+                className="pt-20"
                 width="500"
-                height="400"
+                height="350"
                 alt="Register"
               />
             </div>
