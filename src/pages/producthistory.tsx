@@ -82,14 +82,14 @@ const Producthistory: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Product History</title>
-        <meta name="description" content="Chain -Product History" />
+        <title>RoRs History</title>
+        <meta name="description" content="RoRs History" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="px-4 md:px-0 my-8 mx-auto max-w-[1080px]">
         <div className="max-w-7xl pt-5 pb-5 mx-auto">
-          <Header heading="Product History" />
+          <Header heading="Record of Rights History" />
           <div className="flex flex-col text-center w-full">
             <div className="w-full py-4 overflow-x-hidden overflow-y-auto md:inset-0 justify-center flex md:h-full">
               <div className="relative w-full h-full md:h-auto">
@@ -101,9 +101,9 @@ const Producthistory: NextPage = () => {
                           <Input
                             id="productid"
                             name="productid"
-                            label="Product ID"
+                            label="Property ID"
                             type="text"
-                            placeholder="Product ID"
+                            placeholder="Property ID"
                             value={(productData as any).productid}
                             onChange={handleData}
                           />
