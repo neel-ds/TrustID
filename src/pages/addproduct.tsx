@@ -30,6 +30,7 @@ import {
   Box,
   Image,
   Text,
+  Textarea,
 } from "@chakra-ui/react";
 import { QRCode } from "react-qr-svg";
 import { CONTRACT_ADDRESS } from "../utils/contractAddress";
@@ -123,14 +124,14 @@ const Addproduct: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Add Product</title>
+        <title>Add Land Information</title>
         <meta name="description" content="Chain - Add Product" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="px-4 md:px-0 my-8 mx-auto max-w-[1080px]">
         <div className="pt-5 pb-5 mx-auto max-w-7xl">
-          <Header heading="Add Product" />
+          <Header heading="Add Land Information" />
           <div className="flex flex-col w-full text-center">
             <div className="flex justify-center w-full py-4 overflow-x-hidden overflow-y-auto md:inset-0 md:h-full">
               <div className="relative w-full h-full md:h-auto">
@@ -154,12 +155,20 @@ const Addproduct: NextPage = () => {
                             placeholder="Enter Your Address"
                             onChange={handleData}
                           />
-                          <Input
+
+                          <Textarea
                             id="description"
                             name="description"
                             label="Description"
-                            type="textarea"
                             placeholder="Description"
+                            onChange={handleData}
+                          />
+                          <Input
+                            id="description"
+                            name="description"
+                            label="Property dimensions"
+                            type="textarea"
+                            placeholder="Enter the dimensions of your land"
                             onChange={handleData}
                           />
                         </div>
@@ -168,14 +177,23 @@ const Addproduct: NextPage = () => {
                             id="Location"
                             name="Location"
                             label="Land Area"
-                            placeholder=""
+                            placeholder="location"
                             onChange={handleData}
                           />
+                          <Input
+                            id=""
+                            name=""
+                            label="PIN Code"
+                            placeholder="Enter land area pin code"
+                            type="number"
+                            onChange={handleData}
+                          />
+
                           <div className="flex space-x-5">
                             <FileUpload
                               id="productimage"
                               name="productimage"
-                              label="Product Image"
+                              label="Proof of ownership"
                               onChange={(e: any) => {
                                 const image = URL.createObjectURL(
                                   e.target.files[0]
