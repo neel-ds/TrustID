@@ -46,12 +46,12 @@ const Home: NextPage = () => {
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#8b00ff] to-[#a75eff] dark:from-[#8c2bff] dark:to-[#d97dff] pb-4">
                 Land Registry
               </span>
-              <span className="block font-semibold text-gray-200 dark:text-[#e99aff] font-medium text-2xl">
+              <span className="block font-semibold text-gray-700 dark:text-[#e99aff] font-medium text-2xl">
                 Decentralized Application
               </span>
             </h1>
             <p className="mt-3 text-base text-gray-700 dark:text-gray-300 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-              Verify the authenticity of products by unique product ID.
+              Verify the personhood of entity by scanning QR code.
             </p>
             <div className="mt-5 sm:mt-8 sm:flex lg:justify-start md:flex-col lg:flex-row">
               <div>

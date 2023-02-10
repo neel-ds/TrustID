@@ -1,0 +1,134 @@
+import { NextPage } from "next";
+import { useState, useEffect } from "react";
+import React from "react";
+import Head from "next/head";
+import Button from "../components/form-elements/button";
+import FileUpload from "../components/form-elements/file-upload";
+import Header from "../components/form-components/Header";
+import { useToast } from "@chakra-ui/react";
+import { Image } from "@chakra-ui/react";
+
+const Kyc: NextPage = () => {
+  const [image, setImage] = useState("");
+  const toast = useToast();
+  const [isSuccess, setstatus] = useState("");
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast({
+        title: "KYC Verification",
+        description: "KYC has been verified successfully",
+        status: "success",
+        duration: 10,
+        isClosable: true,
+      });
+    }
+  }, [isSuccess, toast]);
+
+  const findAadharNumberAndDOB = (text: string) => {
+    const aadharRegex = /\b\d{4}\s\d{4}\s\d{4}\b/;
+    const dobRegex = /\b\d{2}\/\d{2}\/\d{4}\b/;
+    const aadharMatch = text.match(aadharRegex);
+    const dobMatch = text.match(dobRegex);
+    if (aadharMatch && dobMatch) {
+      return { aadharNumber: aadharMatch[0], dob: dobMatch[0] };
+    }
+    return null;
+  };
+
+  const execute = async (text: any) => {
+    const aadharNumberAndDOB = findAadharNumberAndDOB(text);
+    console.log(aadharNumberAndDOB?.aadharNumber.replace(/ /g, ""));
+    setstatus("True");
+  };
+
+  return (
+    <>
+      <Head>
+        <title>KYC Verification</title>
+        <meta name="description" content="Chain - Add Product" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <main className="px-4 md:px-0 my-8 mx-auto max-w-[1080px]">
+        <div className="pt-5 pb-5 mx-auto max-w-7xl">
+          <Header heading="Claim DID" />
+          <div className="flex flex-col w-full text-center">
+            <div className="flex justify-center w-full py-4 overflow-x-hidden overflow-y-auto md:inset-0 md:h-full">
+              <div className="relative w-full h-full md:h-auto">
+                <div className="relative bg-white rounded-lg shadow backdrop-blur-sm bg-opacity-20 dark:bg-gray-700 dark:bg-opacity-20">
+                  <div className="px-6 py-6 lg:px-8">
+                    <form className="space-y-6">
+                      <div className="flex flex-col md:flex-row md:space-x-5">
+                        <div className="w-full space-y-6 md:w-1/2 mb-7 md-mb-0">
+                          <div className="flex space-x-5">
+                            <FileUpload
+                              id="productimage"
+                              name="productimage"
+                              label="Proof of personhood"
+                              onChange={(e: any) => {
+                                const image = URL.createObjectURL(
+                                  e.target.files[0]
+                                );
+                                console.log(e.target.files[0]);
+                                setImage(image);
+                                const data = new FormData();
+                                data.append(
+                                  "file",
+                                  e.target.files[0],
+                                  e.target.files[0].name
+                                );
+
+                                const options = {
+                                  method: "POST",
+                                  headers: {
+                                    "X-RapidAPI-Key":
+                                      "b6c828fff1msh2511ee51b094d03p1e49e9jsn476e7135f1ba",
+                                    "X-RapidAPI-Host":
+                                      "ocr-nanonets.p.rapidapi.com",
+                                  },
+                                  body: data,
+                                };
+
+                                fetch(
+                                  "https://ocr-nanonets.p.rapidapi.com/",
+                                  options
+                                )
+                                  .then((response) => response.json())
+                                  .then((response) => {
+                                    const rawData =
+                                      response.results[0].page_data[0].raw_text;
+                                    execute(rawData);
+                                    console.log(
+                                      response.results[0].page_data[0].raw_text
+                                    );
+                                  })
+
+                                  .catch((err) => console.error(err));
+                              }}
+                            />
+                            <Image
+                              src={image !== "" ? image : "/previewIcon.png"}
+                              alt="preview"
+                              width={200}
+                              height={200}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="max-w-[200px] flex m-auto">
+                        <Button label="Submit" />
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </>
+  );
+};
+
+export default Kyc;
