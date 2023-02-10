@@ -7,8 +7,18 @@ import FileUpload from "../components/form-elements/file-upload";
 import Header from "../components/form-components/Header";
 import { useToast } from "@chakra-ui/react";
 import { Image } from "@chakra-ui/react";
+import jwt_decode from 'jwt-decode';
 
 const Kyc: NextPage = () => {
+
+  const [token, setToken] = useState("")
+  const [schema, setSchema] = useState("")
+  const [schemaLink, setClaimLink] = useState("")
+  const [dob, setDob] = useState("")
+  const [aadhar, setAadhar] = useState("")
+
+  
+
   const [image, setImage] = useState("");
   const toast = useToast();
   const [isSuccess, setstatus] = useState("");
@@ -39,8 +49,83 @@ const Kyc: NextPage = () => {
   const execute = async (text: any) => {
     const aadharNumberAndDOB = findAadharNumberAndDOB(text);
     console.log(aadharNumberAndDOB?.aadharNumber.replace(/ /g, ""));
+    console.log(aadharNumberAndDOB?.dob);
+
+    setAadhar(aadharNumberAndDOB?.aadharNumber.replace(/ /g, "") as any);
+    setDob(aadharNumberAndDOB?.dob as any) ;
     setstatus("True");
   };
+
+  useEffect(() => {
+    fetch('https://api-staging.polygonid.com/v1/orgs/sign-in', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept-Encoding': 'application/json',
+      },
+      body: JSON.stringify({
+        email: process.env.EMAIL,
+        password: process.env.PASSWORD,
+      }),
+    })
+      .then((response) => response.json())
+      .then(({ token }) => {
+        console.log("TOken is",token);
+        setToken(token)
+        const {
+          account: { organization: issuerId },
+        } = jwt_decode(token) as any
+
+        const tempSchemaLink = `https://api-staging.polygonid.com/v1/issuers/${issuerId}/schemas/${
+          process.env.SCHEMA_ID
+        }` 
+        setClaimLink(`${tempSchemaLink}/offers`)
+        return { token, tempSchemaLink }
+      })
+      .then(({ token, tempSchemaLink }) => {
+        fetch(tempSchemaLink, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => setSchema(data))
+      })
+  }, [])
+
+  
+  const handleResults = (results: any) => {
+    console.log("Results", results)
+    fetch(schemaLink, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept-Encoding': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        attributes: Object.keys(results).map((k) => {
+          const removeDashes = results[k].indexOf('-') !== 0
+          const val = removeDashes ? results[k].replaceAll('-', '') : results[k]
+          return {
+            attributeKey: k,
+            attributeValue: parseInt(val),
+          }
+        }),
+      }),
+    })
+      .then((response) => response.json())
+      .then(({ id }) => {
+        console.log(`https://platform-test.polygonid.com/claim-link/${id}`);
+        window.open(
+          `https://platform-test.polygonid.com/claim-link/${id}`,
+          '_newtab'
+        )
+      })
+  }
 
   return (
     <>
@@ -67,6 +152,7 @@ const Kyc: NextPage = () => {
                               name="productimage"
                               label="Proof of personhood"
                               onChange={(e: any) => {
+                                e.preventDefault();
                                 const image = URL.createObjectURL(
                                   e.target.files[0]
                                 );
@@ -117,7 +203,12 @@ const Kyc: NextPage = () => {
                         </div>
                       </div>
                       <div className="max-w-[200px] flex m-auto">
-                        <Button label="Submit" />
+                      <button onClick={(e) => {
+                        e.preventDefault();
+        handleResults({"IDNUMBER": aadhar, "DOB": dob.split('/').reverse().join('/').replace(/\//g, '-')});
+        console.log("Token", aadhar, dob.split('/').reverse().join('/').replace(/\//g, '-'), token);
+      }}>Click Me</button>
+     
                       </div>
                     </form>
                   </div>
