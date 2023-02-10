@@ -34,22 +34,19 @@ import {
 } from "@chakra-ui/react";
 import { QRCode } from "react-qr-svg";
 import { CONTRACT_ADDRESS } from "../utils/contractAddress";
-import {create, useStore} from 'zustand';
-
+import { create, useStore } from "zustand";
 
 interface State {
   name: string;
 }
 
-
-
 const Addproduct: NextPage = () => {
- const useStore = create<State>(set => ({
-    name: '',
+  const useStore = create<State>((set) => ({
+    name: "",
     setName: (name: string) => set({ name }),
-  })) 
-    // const store = useStore();
-    // store.setName(e.target.value)
+  }));
+  // const store = useStore();
+  // store.setName(e.target.value)
   const [productData, setProductData] = useState({});
   const [imageUrl, setImageUrl] = useState("");
   const [image, setImage] = useState("");
@@ -76,7 +73,6 @@ const Addproduct: NextPage = () => {
   });
 
   //zustand function to store value of userAddress
-  
 
   const toast = useToast();
 
@@ -152,7 +148,7 @@ const Addproduct: NextPage = () => {
           <div className="flex flex-col w-full text-center">
             <div className="flex justify-center w-full py-4 overflow-x-hidden overflow-y-auto md:inset-0 md:h-full">
               <div className="relative w-full h-full md:h-auto">
-                <div className="relative bg-white rounded-lg shadow backdrop-blur-sm bg-opacity-20 dark:bg-gray-700 dark:bg-opacity-20">
+                <div className="relative bg-white rounded-lg shadow bg-opacity-20 dark:bg-gray-700 dark:bg-opacity-20">
                   <div className="px-6 py-6 lg:px-8">
                     <form className="space-y-6">
                       <div className="flex flex-col md:flex-row md:space-x-5">
@@ -163,7 +159,7 @@ const Addproduct: NextPage = () => {
                             label="Owner's name "
                             type="text"
                             placeholder="Enter Your Name"
-                            onChange={e => useStore.setState(e.target.value)}
+                            onChange={(e) => useStore.setState(e.target.value)}
                           />
                           <Input
                             id="productname"
