@@ -34,8 +34,22 @@ import {
 } from "@chakra-ui/react";
 import { QRCode } from "react-qr-svg";
 import { CONTRACT_ADDRESS } from "../utils/contractAddress";
+import {create, useStore} from 'zustand';
+
+
+interface State {
+  name: string;
+}
+
+
 
 const Addproduct: NextPage = () => {
+ const useStore = create<State>(set => ({
+    name: '',
+    setName: (name: string) => set({ name }),
+  })) 
+    // const store = useStore();
+    // store.setName(e.target.value)
   const [productData, setProductData] = useState({});
   const [imageUrl, setImageUrl] = useState("");
   const [image, setImage] = useState("");
@@ -60,6 +74,9 @@ const Addproduct: NextPage = () => {
       }
     },
   });
+
+  //zustand function to store value of userAddress
+  
 
   const toast = useToast();
 
@@ -125,7 +142,7 @@ const Addproduct: NextPage = () => {
     <>
       <Head>
         <title>Add Land Information</title>
-        <meta name="description" content="Chain - Add Product" />
+        <meta name="description" content="Chain - Register Land" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -146,19 +163,20 @@ const Addproduct: NextPage = () => {
                             label="Owner's name "
                             type="text"
                             placeholder="Enter Your name"
-                            onChange={handleData}
+                            onChange={e => useStore.setState(e.target.value)}
                           />
                           <Input
                             id="productname"
                             name="productname"
-                            label="Owner' Address"
+                            label="Owner's Address"
                             placeholder="Enter Your Address"
                             onChange={handleData}
                           />
 
-                          <Textarea
+                          <Input
                             id="description"
                             name="description"
+                            type="textarea"
                             label="Description"
                             placeholder="Description"
                             onChange={handleData}
@@ -167,7 +185,6 @@ const Addproduct: NextPage = () => {
                             id="description"
                             name="description"
                             label="Property dimensions"
-                            type="textarea"
                             placeholder="Enter the dimensions of your land"
                             onChange={handleData}
                           />
@@ -223,7 +240,7 @@ const Addproduct: NextPage = () => {
                         </div>
                       </div>
                       <div className="max-w-[200px] flex m-auto">
-                        <Button label="Add Product" onClick={onOpen} />
+                        <Button label="Register Land" onClick={onOpen} />
                         <Modal onClose={onClose} isOpen={isOpen} isCentered>
                           <ModalOverlay />
                           <ModalContent>
