@@ -6,7 +6,7 @@ import Input from "../components/form-elements/input";
 import Header from "../components/form-components/Header";
 import Timeline from "../components/timeline";
 import ProductDetail from "../components/product-detail";
-import trustchainABI from "../contracts/trustchain.json";
+import trustchainABI from "../contracts/land.json";
 import { useContractRead } from "wagmi";
 import { useRouter } from "next/router";
 import { CONTRACT_ADDRESS } from "../utils/contractAddress";

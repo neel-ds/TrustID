@@ -13,11 +13,9 @@ import {
   useWaitForTransaction,
   useAccount,
 } from "wagmi";
-import ABI from "../contracts/polygonID_ABI.json";
 import { useToast } from "@chakra-ui/react";
 import { Web3Storage } from "web3.storage";
-import trustchainABI from "../contracts/trustchain.json";
-import manufacturerQR from "../contracts/manufacturer/manufacturer.json";
+import landABI from "../contracts/land.json";
 import { useDisclosure } from "@chakra-ui/react";
 import {
   Modal,
@@ -40,7 +38,7 @@ interface State {
   name: string;
 }
 
-const Addproduct: NextPage = () => {
+const AddLand: NextPage = () => {
   const useStore = create<State>((set) => ({
     name: "",
     setName: (name: string) => set({ name }),
@@ -61,32 +59,31 @@ const Addproduct: NextPage = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  useContractEvent({
-    address: "0x2298cCe5c77225Cc3f320a3acCaD1a9639206852",
-    abi: ABI,
-    eventName: "ProofSubmitted",
-    listener: (eventHappened, userAddress, error) => {
-      if (eventHappened) {
-        setUserAddress(userAddress as string);
-      }
-    },
-  });
+  // useContractEvent({
+  //   address: "0x2298cCe5c77225Cc3f320a3acCaD1a9639206852",
+  //   abi: ABI,
+  //   eventName: "ProofSubmitted",
+  //   listener: (eventHappened, userAddress, error) => {
+  //     if (eventHappened) {
+  //       setUserAddress(userAddress as string);
+  //     }
+  //   },
+  // });
 
-  //zustand function to store value of userAddress
 
   const toast = useToast();
 
   const { config } = usePrepareContractWrite({
     address: CONTRACT_ADDRESS,
-    abi: trustchainABI,
-    functionName: "addProduct",
+    abi: landABI,
+    functionName: "registerLand",
     args: [
-      (productData as any).productid,
-      (productData as any).productname,
-      (productData as any).description,
-      (productData as any).Location,
-      imageUrl,
+      (productData as any).id,
+      (productData as any).Name,
+      `${(productData as any).address + (productData as any).Location + (productData as any).pincode}`,
       (productData as any).locationURL,
+      imageUrl,
+      (productData as any).dimensions,
     ],
   });
   const { data, write } = useContractWrite(config);
@@ -154,35 +151,36 @@ const Addproduct: NextPage = () => {
                       <div className="flex flex-col md:flex-row md:space-x-5">
                         <div className="w-full space-y-6 md:w-1/2 mb-7 md-mb-0">
                           <Input
-                            id="productid"
-                            name="productid"
-                            label="Owner's name "
+                            id="id"
+                            name="id"
+                            label="Land ID"
                             type="text"
-                            placeholder="Enter Your Name"
-                            onChange={(e) => useStore.setState(e.target.value)}
-                          />
-                          <Input
-                            id="productname"
-                            name="productname"
-                            label="Owner's Address"
-                            placeholder="Enter Your Address"
-                            onChange={handleData}
+                            placeholder="Enter Your Land ID"
+                            onChange={(e) => { handleData(e) }}
                           />
 
                           <Input
-                            id="description"
-                            name="description"
-                            type="textarea"
-                            label="Description"
-                            placeholder="Description"
-                            onChange={handleData}
+                            id="name"
+                            name="Name"
+                            label="Owner's name "
+                            type="text"
+                            placeholder="Enter Your Name"
+                            onChange={(e) => { handleData(e) }}
                           />
                           <Input
-                            id="description"
-                            name="description"
+                            id="Address"
+                            name="address"
+                            label="Owner's Address"
+                            placeholder="Enter Your Address"
+                            onChange={(e) => { handleData(e) }}
+                          />
+
+                          <Input
+                            id="dimensions"
+                            name="dimensions"
                             label="Property dimensions"
                             placeholder="Enter the dimensions of your land"
-                            onChange={handleData}
+                            onChange={(e) => { handleData(e) }}
                           />
                         </div>
                         <div className="w-full space-y-6 md:w-1/2">
@@ -191,15 +189,15 @@ const Addproduct: NextPage = () => {
                             name="Location"
                             label="Land Area"
                             placeholder="Location"
-                            onChange={handleData}
+                            onChange={(e) => { handleData(e) }}
                           />
                           <Input
-                            id=""
-                            name=""
-                            label="PIN Code"
+                            id="pincode"
+                            name="pincode"
+                            label="PINCODE"
                             placeholder="Enter Landmark PIN Code"
                             type="number"
-                            onChange={handleData}
+                            onChange={(e) => { handleData(e) }}
                           />
 
                           <div className="flex space-x-5">
@@ -236,7 +234,10 @@ const Addproduct: NextPage = () => {
                         </div>
                       </div>
                       <div className="max-w-[200px] flex m-auto">
-                        <Button label="Register RoR" onClick={onOpen} />
+                        <Button label="Register RoR" onClick={
+                          () => {
+                            write?.()
+                          }} />
                         <Modal onClose={onClose} isOpen={isOpen} isCentered>
                           <ModalOverlay />
                           <ModalContent>
@@ -251,11 +252,11 @@ const Addproduct: NextPage = () => {
                                 is connected to this site.
                               </Text>
                               <Box className="flex flex-col items-center justify-center">
-                                <QRCode
+                                {/* <QRCode
                                   level="Q"
                                   style={{ width: 350 }}
                                   value={JSON.stringify(manufacturerQR)}
-                                />
+                                /> */}
                               </Box>
                             </ModalBody>
                             <ModalFooter>
@@ -276,4 +277,4 @@ const Addproduct: NextPage = () => {
   );
 };
 
-export default Addproduct;
+export default AddLand;

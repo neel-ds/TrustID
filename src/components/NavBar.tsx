@@ -127,7 +127,7 @@ const Header = () => {
                   </PopoverTrigger>
                   <PopoverContent className="box-border p-4 bg-blue-100 shadow-lg bg-opacity-80 h-25 w-35 dark:bg-black/40 dark:bg-opacity-80 dark:text-white/80 rounded-xl border-1 min-w-sm">
                     <Link
-                      href="/addproduct"
+                      href="/addLand"
                       className="group display-block p-2 rounded-md hover:bg-blue-200 hover:text-[#a13bf7]"
                     >
                       <Stack direction={"row"} align={"center"}>

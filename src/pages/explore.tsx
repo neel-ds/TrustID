@@ -3,19 +3,18 @@ import { SimpleGrid } from "@chakra-ui/react";
 import ProductCard from "../components/ProductCard";
 import { useContractRead } from "wagmi";
 import { useEffect, useState } from "react";
-import contractABI from "../contracts/trustchain.json";
+import contractABI from "../contracts/land.json";
 import { CONTRACT_ADDRESS } from "../utils/contractAddress";
 import Usestore from '../components/store';
 
 export default function Products() {
   interface ProductDetails {
-    productId: number;
+    id: string;
     name: string;
-    description: string;
+    location: string;
+    locationURL: string;
     imageURL: string;
-    locationStatuses: string[];
-    timestamp: number[];
-    locationURL: string[];
+    propertyDim: string;
   }
 
   const [productData, setProductData] = useState([{}]);
@@ -23,18 +22,19 @@ export default function Products() {
   const { data, isError, isLoading } = useContractRead({
     address: CONTRACT_ADDRESS,
     abi: contractABI,
-    functionName: "getAllProducts",
+    functionName: "getAllLands",
   });
 
   useEffect(() => {
     console.log(Usestore.getState().name);
+    console.log(data)
     if ((data as ProductDetails[]) && !isLoading) {
       let products = [];
       for (let product of data as ProductDetails[]) {
         products.push({
-          productId: Number((product.productId as any)._hex),
+          id: product.id,
           name: product.name,
-          description: product.description,
+          location: product.location,
           imageURL: product.imageURL,
         });
       }
