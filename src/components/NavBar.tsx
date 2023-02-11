@@ -187,7 +187,7 @@ const Header: React.FC = () => {
                       </Stack>
                     </Link>
                     <Link
-                      href="/updateproduct"
+                      href="/changeownership"
                       className="group display-block p-2 rounded-md hover:bg-blue-200 hover:text-[#a13bf7]"
                     >
                       <Stack direction={"row"} align={"center"}>
@@ -206,7 +206,7 @@ const Header: React.FC = () => {
               </li>
               <li>
                 <Link
-                  href="/producthistory"
+                  href="/landhistory"
                   className={`${
                     pathname === "/producthistory"
                       ? "text-[#a137df] dark:text-white"

@@ -39,7 +39,7 @@ interface ProductDetails {
   propertyDim: string;
 }
 
-const Updateproduct: NextPage = () => {
+const ChangeOwnership: NextPage = () => {
   const [productData, setProductData] = useState({});
   const [productID, setProductID] = useState(0);
   const [name, setName] = useState("");
@@ -233,4 +233,4 @@ const Updateproduct: NextPage = () => {
   );
 };
 
-export default Updateproduct;
+export default ChangeOwnership;
