@@ -34,7 +34,7 @@ import { QRCode } from "react-qr-svg";
 import { CONTRACT_ADDRESS } from "../utils/contractAddress";
 import { create, useStore } from "zustand";
 import verifierQR from "../contracts/verifier.json";
-import PolygonIDABI from "../contracts/PolygonID.json";
+import PolygonIDABI from "../contracts/PolygonID_ABI.json";
 interface State {
   name: string;
 }
