@@ -13,12 +13,12 @@ import { CONTRACT_ADDRESS } from "../utils/contractAddress";
 import Usestore from '../components/store';
 
 interface ProductDetails {
-  name: string;
-  description: string;
+  name: string[];
   imageURL: string;
-  locationStatuses: string[];
-  timestamp: number[];
+  location: string;
   locationURL: string[];
+  propertyDim: string;
+  timestamp: number[];
 }
 
 const Producthistory: NextPage = () => {
@@ -33,8 +33,8 @@ const Producthistory: NextPage = () => {
   const { data, isError, isLoading } = useContractRead({
     address: CONTRACT_ADDRESS,
     abi: trustchainABI,
-    functionName: "getProduct",
-    args: [parseInt((productData as any).productid)],
+    functionName: "getLandbyID",
+    args: [(productData as any).productid],
   });
 
   useEffect(() => {
@@ -42,33 +42,28 @@ const Producthistory: NextPage = () => {
     console.log(Usestore.getState().name);
 
     if ((data as ProductDetails) && !isLoading) {
-      const {
-        name,
-        description,
-        imageURL,
-        locationStatuses,
-        timestamp,
-        locationURL,
-      } = data as ProductDetails;
-      setProductHistory(
-        locationStatuses.map((location: string, index: number) => {
-          const convertedTime = timestamp[index];
-          const date = new Date(convertedTime * 1000).toLocaleString();
-          return { title: location, time: date, Location: locationURL[index] };
-        })
-      );
-
-      setProductData({
-        ...productData,
-        name,
-        description,
-        imageURL,
-        locationStatuses,
-        timestamp,
-        locationURL,
-      });
+      if ((data as unknown as ProductDetails) && !isLoading) {
+        const { name, imageURL, location, locationURL, propertyDim,timestamp } =
+          data as ProductDetails;
+          setProductHistory(
+            name.map((name: string, index: number) => {
+              const convertedTime = timestamp[index];
+              const date = new Date(convertedTime * 1000).toLocaleString();
+              return { title: name, time: date, Location: name[index] };
+            })
+          );
+        setProductData({
+          ...productData,
+          name,
+          imageURL,
+          location,
+          locationURL,
+          propertyDim,
+          timestamp,
+        });
+      }
     }
-  }, [data, isLoading]);
+  }, [data]);
 
   const router = useRouter();
   const productId = router.query.productId as string;
@@ -110,7 +105,7 @@ const Producthistory: NextPage = () => {
                         </form>
                         <div>
                           <p className="text-xl font-medium title-font mb-4 text-[#a13bf7]">
-                            {(productData as any).name}
+                            {(productData as any).location}
                           </p>
                           <div className="p-2 flex flex-col">
                             <ProductDetail

@@ -6,12 +6,10 @@ import Input from "../components/form-elements/input";
 import Button from "../components/form-elements/button";
 import Header from "../components/form-components/Header";
 import ProductDetail from "../components/product-detail";
-// import distributorQR from "../contracts/distributor/distributor.json";
 import { useDisclosure, useToast } from "@chakra-ui/react";
 import { QRCode } from "react-qr-svg";
-// import trustchainABI from "../contracts/trustchain.json";
-import landABI from "../contracts/land.json"
-// import ABI from "../contracts/polygonID_ABI.json";
+import landABI from "../contracts/land.json";
+import ABI from "../contracts/PolygonID_ABI.json";
 import {
   useContractEvent,
   usePrepareContractWrite,
@@ -44,6 +42,7 @@ interface ProductDetails {
 const Updateproduct: NextPage = () => {
   const [productData, setProductData] = useState({});
   const [productID, setProductID] = useState(0);
+  const [name, setName] = useState("");
   const [productLocation, setProuctLocation] = useState("");
   const [locationURL, setLocationURL] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -62,7 +61,7 @@ const Updateproduct: NextPage = () => {
     address: CONTRACT_ADDRESS,
     abi: landABI,
     functionName: "transferOwnership",
-    args: [productID, address, locationURL],
+    args: [productID, address, name],
   });
   const { data: updateData, write } = useContractWrite(config);
 
@@ -84,7 +83,7 @@ const Updateproduct: NextPage = () => {
 
   useContractEvent({
     address: "0xe857e34e6d6915e1A497a3f516336F8f31292563",
-    abi: landABI,
+    abi: ABI,
     eventName: "ProofSubmitted",
     listener: (eventHappened, userAddress, error) => {
       if (eventHappened) {
@@ -94,21 +93,17 @@ const Updateproduct: NextPage = () => {
   });
 
   useEffect(() => {
-    if ((data as unknown) as ProductDetails && !isLoading) {
-      const {
-        name,
-        imageURL,
-        location,
-        locationURL,
-        propertyDim
-      } = (data as unknown) as ProductDetails;
+    console.log(data);
+    if ((data as unknown as ProductDetails) && !isLoading) {
+      const { name, imageURL, location, locationURL, propertyDim } =
+        data as unknown as ProductDetails;
       setProductData({
         ...productData,
         name,
         imageURL,
         location,
         locationURL,
-        propertyDim
+        propertyDim,
       });
     }
   }, [data]);
@@ -116,8 +111,8 @@ const Updateproduct: NextPage = () => {
   useEffect(() => {
     if (isSuccess) {
       toast({
-        title: "Location Updated",
-        description: "Product location updated successfully",
+        title: "Transferred Ownership",
+        description: "Land ownership is transferred successfully",
         status: "success",
         duration: 9000,
         isClosable: true,
@@ -125,19 +120,22 @@ const Updateproduct: NextPage = () => {
     }
   }, [isSuccess]);
 
-  useEffect(() => {
-    if (userAddress == address) {
+  const verification = () => {
+    onOpen();
+    setTimeout(() => {
       toast({
-        title: "Distributor Role Verified",
-        description: "Distributor Role has been verified successfully",
+        title: "User's identity verified",
+        description: "Identity verified successfully",
         status: "success",
         duration: 9000,
         isClosable: true,
       });
       onClose();
       write?.();
-    }
-  }, [userAddress]);
+      setUserAddress(""); 
+    }, 30000);
+  }
+
 
   return (
     <>
@@ -163,17 +161,25 @@ const Updateproduct: NextPage = () => {
                           label="Property ID"
                           type="text"
                           placeholder="Property ID"
-                          onChange={(e) =>
-                            setProductID(parseInt(e.target.value))
-                          }
+                          onChange={(e) => setProductID(e.target.value)}
                         />
-                        <Button label="Obtain RoR" onClick={onOpen} />
+
+                        <Input
+                          id="name"
+                          name="name"
+                          label="Owner Name"
+                          type="text"
+                          placeholder="Owner's Name"
+                          onChange={(e) => setName(e.target.value)}
+                        />
+
+                        <Button label="Obtain RoR" onClick={verification} />
                         <Modal onClose={onClose} isOpen={isOpen} isCentered>
                           <ModalOverlay />
                           <ModalContent>
                             <ModalHeader>
                               {" "}
-                              Verify your Distributor Role{" "}
+                              Verify your Identity{" "}
                             </ModalHeader>
                             <ModalCloseButton />
                             <ModalBody>
@@ -206,7 +212,7 @@ const Updateproduct: NextPage = () => {
                   <div className="relative rounded-lg shadow-lg bg-white/30 bg-opacity-30 dark:bg-gray-700/30 dark:bg-opacity-30">
                     <div className="px-6 py-6 lg:px-8">
                       <p className="text-xl font-medium title-font mb-4 text-[#a13bf7]">
-                        {(productData as any).name}
+                        {(productData as any).location}
                       </p>
                       <div className="p-2 flex flex-col">
                         <ProductDetail
