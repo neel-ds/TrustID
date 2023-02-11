@@ -18,11 +18,56 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
+import React from "react";
 
-const Header = () => {
+interface Question {
+  id: string;
+  question: string;
+  answer: string;
+}
+
+const questions: Question[] = [
+  {
+    id: "1",
+    question: "How to generate your Digital Identity?",
+    answer:
+      "Go to the Register page and upload your Aadhar Card as KYC verification. Don't worry we got you! We are not storing your crucial details even on blockchain. It will show you the extracted details and generate a verifiable credential on click of submit. Scan the QR code from Polygon ID app and get it in your wallet. No worries that QR works only once.",
+  },
+  {
+    id: "2",
+    question: "How to register your Record of Rights?",
+    answer:
+      "Under records, Go to Add RoR: Enter the mentioned details of your land and scan the QR code to verify your personhood using Polygon ID app with same wallet address which is connected to this platform. It will write the records on-chain and issue ownership to your wallet address.",
+  },
+  {
+    id: "3",
+    question: "How to transfer the ownership of land to other?",
+    answer:
+      "Get the property ID from listed under explore page then route to Transfer RoR page; Obtain the ownership by verifying your personhood scanning QR code with Polygon ID app. You can check the updates in RoRs History page.",
+  },
+];
+const Header: React.FC = () => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const { theme, setTheme } = useTheme();
   const [isMounted, setIsMounted] = useState(false);
+  const [showFAQ, setShowFAQ] = useState(false);
+  const [showAnswers, setShowAnswers] = useState({});
+
+  const handleShowFAQ = () => {
+    setShowFAQ(true);
+  };
+
+  const toggleAnswer = (questionId) => {
+    setShowAnswers({
+      ...showAnswers,
+      [questionId]: !showAnswers[questionId],
+    });
+  };
+
+  const handleCloseFAQ = () => {
+    setShowFAQ(false);
+    setShowAnswers({});
+  };
 
   useEffect(() => {
     setIsMounted(true);
@@ -190,6 +235,73 @@ const Header = () => {
             className="text-white hover:cursor-pointer"
           />
         )}
+      </div>
+      <div className="z-10 bg-[#008dff] w-9 h-9 fixed bottom-[75px] right-[50px] flex justify-center items-center rounded-full">
+        <div className="relative">
+          <button
+            onClick={handleShowFAQ}
+            className="bg-[#008dff] text-white p-3 rounded-3xl hover:bg-[#a13bf7]"
+          >
+            FAQ
+          </button>
+          {showFAQ && (
+            <div className="fixed top-0 left-0 right-0 bottom-0 bg-black opacity-75">
+              <div className="max-w-sm mx-auto mt-20 p-10 bg-white rounded-lg shadow-lg overflow-hidden">
+                {questions.map((question) => (
+                  <div
+                    key={question.id}
+                    className="p-5 border-b border-gray-200"
+                  >
+                    <div className="flex items-center">
+                      <button
+                        onClick={() => toggleAnswer(question.id)}
+                        className="text-gray-500 hover:text-gray-600"
+                      >
+                        <svg
+                          className="w-6 h-6"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          {showAnswers[question.id] ? (
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M5 13l4 4L19 7"
+                            />
+                          ) : (
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M19 9l-7 7-7-7"
+                            />
+                          )}
+                        </svg>
+                      </button>
+                      <div className="ml-3 text-lg font-medium">
+                        {question.question}
+                      </div>
+                    </div>
+                    {showAnswers[question.id] && (
+                      <div className="ml-8 mt-3 text-gray-600">
+                        {question.answer}
+                      </div>
+                    )}
+                  </div>
+                ))}
+                <button
+                  onClick={handleCloseFAQ}
+                  className="bg-blue-500 text-white p-3 rounded-2xl hover:bg-blue-700 mt-5"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
