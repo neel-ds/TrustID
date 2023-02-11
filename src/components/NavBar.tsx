@@ -18,11 +18,56 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
+import React from "react";
 
-const Header = () => {
+interface Question {
+  id: string;
+  question: string;
+  answer: string;
+}
+
+const questions: Question[] = [
+  {
+    id: "1",
+    question: "What is TypeScript?",
+    answer:
+      "TypeScript is a statically typed, object-oriented programming language that builds on JavaScript by adding optional types and other features to help you write safer and more maintainable code.",
+  },
+  {
+    id: "2",
+    question: "What is Tailwind CSS?",
+    answer:
+      "Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces. It provides a large set of pre-designed CSS classes that can be combined to create complex designs with ease.",
+  },
+  {
+    id: "3",
+    question: "What is an FAQ model?",
+    answer:
+      "An FAQ model, or frequently asked questions model, is a common design pattern used to display a list of questions and answers in a user-friendly format. It is often used to provide quick answers to common questions without the need for a full documentation or support page.",
+  },
+];
+const Header: React.FC = () => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const { theme, setTheme } = useTheme();
   const [isMounted, setIsMounted] = useState(false);
+  const [showFAQ, setShowFAQ] = useState(false);
+  const [showAnswers, setShowAnswers] = useState({});
+
+  const handleShowFAQ = () => {
+    setShowFAQ(true);
+  };
+
+  const toggleAnswer = (questionId) => {
+    setShowAnswers({
+      ...showAnswers,
+      [questionId]: !showAnswers[questionId],
+    });
+  };
+
+  const handleCloseFAQ = () => {
+    setShowFAQ(false);
+    setShowAnswers({});
+  };
 
   useEffect(() => {
     setIsMounted(true);
@@ -190,6 +235,73 @@ const Header = () => {
             className="text-white hover:cursor-pointer"
           />
         )}
+      </div>
+      <div className="z-10 bg-[#008dff] w-9 h-9 fixed bottom-[85px] right-[50px] flex justify-center items-center rounded-full">
+        <div className="relative">
+          <button
+            onClick={handleShowFAQ}
+            className="bg-indigo-500 text-white p-3 rounded-full hover:bg-indigo-600"
+          >
+            Show FAQ
+          </button>
+          {showFAQ && (
+            <div className="fixed top-0 left-0 right-0 bottom-0 bg-black opacity-75">
+              <div className="max-w-sm mx-auto mt-20 p-10 bg-white rounded-lg shadow-lg overflow-hidden">
+                {questions.map((question) => (
+                  <div
+                    key={question.id}
+                    className="p-5 border-b border-gray-200"
+                  >
+                    <div className="flex items-center">
+                      <button
+                        onClick={() => toggleAnswer(question.id)}
+                        className="text-gray-500 hover:text-gray-600"
+                      >
+                        <svg
+                          className="w-6 h-6"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          {showAnswers[question.id] ? (
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M5 13l4 4L19 7"
+                            />
+                          ) : (
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M19 9l-7 7-7-7"
+                            />
+                          )}
+                        </svg>
+                      </button>
+                      <div className="ml-3 text-lg font-medium">
+                        {question.question}
+                      </div>
+                    </div>
+                    {showAnswers[question.id] && (
+                      <div className="ml-8 mt-3 text-gray-600">
+                        {question.answer}
+                      </div>
+                    )}
+                  </div>
+                ))}
+                <button
+                  onClick={handleCloseFAQ}
+                  className="bg-indigo-500 text-white p-3 rounded-full hover:bg-indigo-600 mt-5"
+                >
+                  Close FAQ
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
