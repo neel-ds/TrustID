@@ -29,21 +29,21 @@ interface Question {
 const questions: Question[] = [
   {
     id: "1",
-    question: "What is TypeScript?",
+    question: "How to generate your Digital Identity?",
     answer:
-      "TypeScript is a statically typed, object-oriented programming language that builds on JavaScript by adding optional types and other features to help you write safer and more maintainable code.",
+      "Go to the Register page and upload your Aadhar Card as KYC verification. Don't worry we got you! We are not storing your crucial details even on blockchain. It will show you the extracted details and generate a verifiable credential on click of submit. Scan the QR code from Polygon ID app and get it in your wallet. No worries that QR works only once.",
   },
   {
     id: "2",
-    question: "What is Tailwind CSS?",
+    question: "How to register your Record of Rights?",
     answer:
-      "Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces. It provides a large set of pre-designed CSS classes that can be combined to create complex designs with ease.",
+      "Under records, Go to Add RoR: Enter the mentioned details of your land and scan the QR code to verify your personhood using Polygon ID app with same wallet address which is connected to this platform. It will write the records on-chain and issue ownership to your wallet address.",
   },
   {
     id: "3",
-    question: "What is an FAQ model?",
+    question: "How to transfer the ownership of land to other?",
     answer:
-      "An FAQ model, or frequently asked questions model, is a common design pattern used to display a list of questions and answers in a user-friendly format. It is often used to provide quick answers to common questions without the need for a full documentation or support page.",
+      "Get the property ID from listed under explore page then route to Transfer RoR page; Obtain the ownership by verifying your personhood scanning QR code with Polygon ID app. You can check the updates in RoRs History page.",
   },
 ];
 const Header: React.FC = () => {
@@ -236,13 +236,13 @@ const Header: React.FC = () => {
           />
         )}
       </div>
-      <div className="z-10 bg-[#008dff] w-9 h-9 fixed bottom-[85px] right-[50px] flex justify-center items-center rounded-full">
+      <div className="z-10 bg-[#008dff] w-9 h-9 fixed bottom-[75px] right-[50px] flex justify-center items-center rounded-full">
         <div className="relative">
           <button
             onClick={handleShowFAQ}
-            className="bg-indigo-500 text-white p-3 rounded-full hover:bg-indigo-600"
+            className="bg-[#008dff] text-white p-3 rounded-3xl hover:bg-[#a13bf7]"
           >
-            Show FAQ
+            FAQ
           </button>
           {showFAQ && (
             <div className="fixed top-0 left-0 right-0 bottom-0 bg-black opacity-75">
@@ -294,9 +294,9 @@ const Header: React.FC = () => {
                 ))}
                 <button
                   onClick={handleCloseFAQ}
-                  className="bg-indigo-500 text-white p-3 rounded-full hover:bg-indigo-600 mt-5"
+                  className="bg-blue-500 text-white p-3 rounded-2xl hover:bg-blue-700 mt-5"
                 >
-                  Close FAQ
+                  Close
                 </button>
               </div>
             </div>
