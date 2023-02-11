@@ -154,7 +154,7 @@ const Updateproduct: NextPage = () => {
             <div className="w-full md:w-1/2">
               <div className="w-full pl-0 p-4 overflow-x-hidden overflow-y-auto md:inset-0 justify-center flex md:h-full">
                 <div className="relative w-full h-full md:h-auto">
-                  <div className="relative bg-white backdrop-blur-sm bg-opacity-20 rounded-lg shadow dark:bg-gray-700 dark:bg-opacity-20">
+                  <div className="relative bg-white bg-opacity-20 rounded-lg shadow dark:bg-gray-700 dark:bg-opacity-20">
                     <div className="px-6 py-6 lg:px-8">
                       <form className="space-y-6">
                         <Input
