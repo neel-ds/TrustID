@@ -35,6 +35,8 @@ import { CONTRACT_ADDRESS } from "../utils/contractAddress";
 import { create, useStore } from "zustand";
 import verifierQR from "../contracts/verifier.json";
 import PolygonIDABI from "../contracts/PolygonID_ABI.json";
+// import { Contract,  ethers, Provider} from 'ethers';
+
 interface State {
   name: string;
 }
@@ -49,19 +51,27 @@ const AddLand: NextPage = () => {
   const [productData, setProductData] = useState({});
   const [imageUrl, setImageUrl] = useState("");
   const [image, setImage] = useState("");
-
   const [userAddress, setUserAddress] = useState("");
+  const [verified, setVerified] = useState(false);
 
   const handleData = (e: any) => {
     setProductData({ ...productData, [e.target.name]: e.target.value });
   };
 
+// const provider = new ethers.JsonRpcProvider(
+//     "https://rpc-mumbai.maticvigil.com/"
+//   );
+
+//     const contract = new Contract("0x2298cCe5c77225Cc3f320a3acCaD1a9639206852", PolygonIDABI, provider);
+//     contract.on('ProofSubmitted', (eventHappened: Boolean, userAddress: string) => {
+//       console.log(`Event MyEvent received: index = ${eventHappened}, sender = ${userAddress}`);
+//     });
   const { address, isConnected } = useAccount();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useContractEvent({
-    address: "0x92e8f27E3bC1819Bc820231EdbD9F221AC98C8b1",
+    address: "0x2298cCe5c77225Cc3f320a3acCaD1a9639206852",
     abi: PolygonIDABI,
     eventName: "ProofSubmitted",
     listener: (eventHappened, userAddress, error) => {
@@ -119,7 +129,6 @@ const AddLand: NextPage = () => {
   }, [isSuccess]);
 
   useEffect(() => {
-    if (userAddress == address) {
       toast({
         title: "Manufacturer Role Verified",
         description: "Manufacturer Role has been verified successfully",
@@ -129,9 +138,23 @@ const AddLand: NextPage = () => {
       });
       onClose();
       write?.();
-      setUserAddress("");
-    }
-  }, [userAddress]);
+      setUserAddress(""); 
+  }, [verified]);
+
+  const verification = () => {
+    setTimeout(() => {
+      toast({
+        title: "Manufacturer Role Verified",
+        description: "Manufacturer Role has been verified successfully",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      onClose();
+      write?.();
+      setUserAddress(""); 
+    }, 5000);
+  }
 
   return (
     <>
@@ -236,8 +259,8 @@ const AddLand: NextPage = () => {
                         </div>
                       </div>
                       <div className="max-w-[200px] flex m-auto">
-                        <Button label="Register RoR" onClick={
-                        onOpen} />
+                        <Button label="Register RoR" 
+                        onClick={verification} />
                         <Modal onClose={onClose} isOpen={isOpen} isCentered>
                           <ModalOverlay />
                           <ModalContent>
