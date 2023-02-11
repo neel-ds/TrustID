@@ -33,7 +33,8 @@ import {
 import { QRCode } from "react-qr-svg";
 import { CONTRACT_ADDRESS } from "../utils/contractAddress";
 import { create, useStore } from "zustand";
-
+import verifierQR from "../contracts/verifier.json";
+import PolygonIDABI from "../contracts/PolygonID_ABI.json";
 interface State {
   name: string;
 }
@@ -59,16 +60,16 @@ const AddLand: NextPage = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // useContractEvent({
-  //   address: "0x2298cCe5c77225Cc3f320a3acCaD1a9639206852",
-  //   abi: ABI,
-  //   eventName: "ProofSubmitted",
-  //   listener: (eventHappened, userAddress, error) => {
-  //     if (eventHappened) {
-  //       setUserAddress(userAddress as string);
-  //     }
-  //   },
-  // });
+  useContractEvent({
+    address: "0x92e8f27E3bC1819Bc820231EdbD9F221AC98C8b1",
+    abi: PolygonIDABI,
+    eventName: "ProofSubmitted",
+    listener: (eventHappened, userAddress, error) => {
+      if (eventHappened) {
+        setUserAddress(userAddress as string);
+      }
+    },
+  });
 
 
   const toast = useToast();
@@ -93,6 +94,7 @@ const AddLand: NextPage = () => {
   });
 
   useEffect(() => {
+    console.log("erf-i",JSON.stringify(verifierQR));
     if ("geolocation" in navigator) {
       // Retrieve latitude & longitude coordinates from `navigator.geolocation` Web API
       navigator.geolocation.getCurrentPosition(({ coords }) => {
@@ -235,15 +237,13 @@ const AddLand: NextPage = () => {
                       </div>
                       <div className="max-w-[200px] flex m-auto">
                         <Button label="Register RoR" onClick={
-                          () => {
-                            write?.()
-                          }} />
+                        onOpen} />
                         <Modal onClose={onClose} isOpen={isOpen} isCentered>
                           <ModalOverlay />
                           <ModalContent>
                             <ModalHeader>
                               {" "}
-                              Verify your Manufacturer Role
+                              Verify your ID 
                             </ModalHeader>
                             <ModalCloseButton />
                             <ModalBody>
@@ -252,11 +252,11 @@ const AddLand: NextPage = () => {
                                 is connected to this site.
                               </Text>
                               <Box className="flex flex-col items-center justify-center">
-                                {/* <QRCode
+                                <QRCode
                                   level="Q"
                                   style={{ width: 350 }}
-                                  value={JSON.stringify(manufacturerQR)}
-                                /> */}
+                                  value={JSON.stringify(verifierQR)}
+                                />
                               </Box>
                             </ModalBody>
                             <ModalFooter>
