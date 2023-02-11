@@ -91,7 +91,7 @@ const AddLand: NextPage = () => {
     args: [
       (productData as any).id,
       (productData as any).Name,
-      `${(productData as any).address + (productData as any).Location + (productData as any).pincode}`,
+      `${(productData as any).address} ${(productData as any).Location} ${(productData as any).pincode}}`,
       (productData as any).locationURL,
       imageUrl,
       (productData as any).dimensions,
@@ -119,8 +119,8 @@ const AddLand: NextPage = () => {
   useEffect(() => {
     if (isSuccess) {
       toast({
-        title: "Product Added",
-        description: "Product has been added successfully",
+        title: "Land record",
+        description: "Land record added successfully",
         status: "success",
         duration: 9000,
         isClosable: true,
@@ -128,24 +128,12 @@ const AddLand: NextPage = () => {
     }
   }, [isSuccess]);
 
-  useEffect(() => {
-      toast({
-        title: "Manufacturer Role Verified",
-        description: "Manufacturer Role has been verified successfully",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
-      onClose();
-      write?.();
-      setUserAddress(""); 
-  }, [verified]);
-
   const verification = () => {
+    onOpen();
     setTimeout(() => {
       toast({
-        title: "Manufacturer Role Verified",
-        description: "Manufacturer Role has been verified successfully",
+        title: "Profile Verified",
+        description: "User's identity is verified successfully",
         status: "success",
         duration: 9000,
         isClosable: true,
@@ -153,7 +141,7 @@ const AddLand: NextPage = () => {
       onClose();
       write?.();
       setUserAddress(""); 
-    }, 5000);
+    }, 30000);
   }
 
   return (

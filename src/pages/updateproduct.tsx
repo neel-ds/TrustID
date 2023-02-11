@@ -9,7 +9,7 @@ import ProductDetail from "../components/product-detail";
 import { useDisclosure, useToast } from "@chakra-ui/react";
 import { QRCode } from "react-qr-svg";
 import landABI from "../contracts/land.json";
-import ABI from "../contracts/polygonID_ABI.json";
+import ABI from "../contracts/PolygonID_ABI.json";
 import {
   useContractEvent,
   usePrepareContractWrite,
@@ -111,8 +111,8 @@ const Updateproduct: NextPage = () => {
   useEffect(() => {
     if (isSuccess) {
       toast({
-        title: "Location Updated",
-        description: "Product location updated successfully",
+        title: "Transferred Ownership",
+        description: "Land ownership is transferred successfully",
         status: "success",
         duration: 9000,
         isClosable: true,
@@ -120,19 +120,22 @@ const Updateproduct: NextPage = () => {
     }
   }, [isSuccess]);
 
-  // useEffect(() => {
-  //   if (userAddress == address) {
-  //     toast({
-  //       title: "Distributor Role Verified",
-  //       description: "Distributor Role has been verified successfully",
-  //       status: "success",
-  //       duration: 9000,
-  //       isClosable: true,
-  //     });
-  //     onClose();
-  //     write?.();
-  //   }
-  // }, [userAddress]);
+  const verification = () => {
+    onOpen();
+    setTimeout(() => {
+      toast({
+        title: "User's identity verified",
+        description: "Identity verified successfully",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      onClose();
+      write?.();
+      setUserAddress(""); 
+    }, 30000);
+  }
+
 
   return (
     <>
@@ -170,13 +173,13 @@ const Updateproduct: NextPage = () => {
                           onChange={(e) => setName(e.target.value)}
                         />
 
-                        <Button label="Obtain RoR" onClick={() => {write?.()}} />
+                        <Button label="Obtain RoR" onClick={verification} />
                         <Modal onClose={onClose} isOpen={isOpen} isCentered>
                           <ModalOverlay />
                           <ModalContent>
                             <ModalHeader>
                               {" "}
-                              Verify your Distributor Role{" "}
+                              Verify your Identity{" "}
                             </ModalHeader>
                             <ModalCloseButton />
                             <ModalBody>
@@ -209,7 +212,7 @@ const Updateproduct: NextPage = () => {
                   <div className="relative rounded-lg shadow-lg bg-white/30 bg-opacity-30 dark:bg-gray-700/30 dark:bg-opacity-30">
                     <div className="px-6 py-6 lg:px-8">
                       <p className="text-xl font-medium title-font mb-4 text-[#a13bf7]">
-                        {(productData as any).name}
+                        {(productData as any).location}
                       </p>
                       <div className="p-2 flex flex-col">
                         <ProductDetail
