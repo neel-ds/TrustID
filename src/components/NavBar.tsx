@@ -240,13 +240,13 @@ const Header: React.FC = () => {
         <div className="relative">
           <button
             onClick={handleShowFAQ}
-            className="bg-[#008dff] text-white p-3 rounded-3xl hover:bg-[#a13bf7]"
+            className="bg-[#008dff] text-white p-3 rounded-3xl hover:bg-blue-600"
           >
             FAQ
           </button>
           {showFAQ && (
-            <div className="fixed top-0 left-0 right-0 bottom-0 bg-black opacity-75">
-              <div className="max-w-sm mx-auto mt-20 p-10 bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="fixed top-0 left-0 right-0 bottom-0 bg-black opacity-90">
+              <div className="max-w-sm mx-auto mt-20 p-10 bg-white rounded-xl shadow-lg overflow-hidden">
                 {questions.map((question) => (
                   <div
                     key={question.id}
