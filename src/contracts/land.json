@@ -48,17 +48,17 @@
 				"internalType": "address",
 				"name": "_to",
 				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
 			}
 		],
 		"name": "transferOwnership",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
-	},
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
 	},
 	{
 		"inputs": [],
@@ -72,9 +72,9 @@
 						"type": "string"
 					},
 					{
-						"internalType": "string",
+						"internalType": "string[]",
 						"name": "name",
-						"type": "string"
+						"type": "string[]"
 					},
 					{
 						"internalType": "string",
@@ -97,9 +97,9 @@
 						"type": "string"
 					},
 					{
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
+						"internalType": "address[]",
+						"name": "owners",
+						"type": "address[]"
 					}
 				],
 				"internalType": "struct LandRegistry.Land[]",
@@ -128,9 +128,9 @@
 						"type": "string"
 					},
 					{
-						"internalType": "string",
+						"internalType": "string[]",
 						"name": "name",
-						"type": "string"
+						"type": "string[]"
 					},
 					{
 						"internalType": "string",
@@ -153,9 +153,9 @@
 						"type": "string"
 					},
 					{
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
+						"internalType": "address[]",
+						"name": "owners",
+						"type": "address[]"
 					}
 				],
 				"internalType": "struct LandRegistry.Land",

@@ -6,11 +6,12 @@ import Input from "../components/form-elements/input";
 import Button from "../components/form-elements/button";
 import Header from "../components/form-components/Header";
 import ProductDetail from "../components/product-detail";
-import distributorQR from "../contracts/distributor/distributor.json";
+// import distributorQR from "../contracts/distributor/distributor.json";
 import { useDisclosure, useToast } from "@chakra-ui/react";
 import { QRCode } from "react-qr-svg";
-import trustchainABI from "../contracts/trustchain.json";
-import ABI from "../contracts/polygonID_ABI.json";
+// import trustchainABI from "../contracts/trustchain.json";
+import landABI from "../contracts/land.json"
+// import ABI from "../contracts/polygonID_ABI.json";
 import {
   useContractEvent,
   usePrepareContractWrite,
@@ -33,12 +34,11 @@ import {
 import { CONTRACT_ADDRESS } from "../utils/contractAddress";
 
 interface ProductDetails {
-  name: string;
-  description: string;
+  name: string[];
   imageURL: string;
-  locationStatuses: string[];
-  timestamp: number[];
+  location: string;
   locationURL: string[];
+  propertyDim: string;
 }
 
 const Updateproduct: NextPage = () => {
@@ -53,16 +53,16 @@ const Updateproduct: NextPage = () => {
 
   const { data, isError, isLoading } = useContractRead({
     address: CONTRACT_ADDRESS,
-    abi: trustchainABI,
-    functionName: "getProduct",
+    abi: landABI,
+    functionName: "getLandbyID",
     args: [productID],
   });
 
   const { config } = usePrepareContractWrite({
     address: CONTRACT_ADDRESS,
-    abi: trustchainABI,
-    functionName: "addLocationStatus",
-    args: [productID, productLocation, locationURL],
+    abi: landABI,
+    functionName: "transferOwnership",
+    args: [productID, address, locationURL],
   });
   const { data: updateData, write } = useContractWrite(config);
 
@@ -84,7 +84,7 @@ const Updateproduct: NextPage = () => {
 
   useContractEvent({
     address: "0xe857e34e6d6915e1A497a3f516336F8f31292563",
-    abi: ABI,
+    abi: landABI,
     eventName: "ProofSubmitted",
     listener: (eventHappened, userAddress, error) => {
       if (eventHappened) {
@@ -94,23 +94,21 @@ const Updateproduct: NextPage = () => {
   });
 
   useEffect(() => {
-    if ((data as ProductDetails) && !isLoading) {
+    if ((data as unknown) as ProductDetails && !isLoading) {
       const {
         name,
-        description,
         imageURL,
-        locationStatuses,
-        timestamp,
+        location,
         locationURL,
-      } = data as ProductDetails;
+        propertyDim
+      } = (data as unknown) as ProductDetails;
       setProductData({
         ...productData,
         name,
-        description,
         imageURL,
-        locationStatuses,
-        timestamp,
+        location,
         locationURL,
+        propertyDim
       });
     }
   }, [data]);
@@ -187,7 +185,7 @@ const Updateproduct: NextPage = () => {
                                 <QRCode
                                   level="Q"
                                   style={{ width: 350 }}
-                                  value={JSON.stringify(distributorQR)}
+                                  value="{JSON.stringify(distributorQR)}"
                                 />
                               </Box>
                             </ModalBody>
