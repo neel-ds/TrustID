@@ -3,7 +3,7 @@ import { Button as ChakraButton } from "@chakra-ui/react";
 
 interface ButtonProps {
   label?: string;
-  onClick: () => void;
+  onClick: (e: any) => void;
 }
 
 const Button = ({ label, onClick }: ButtonProps) => {

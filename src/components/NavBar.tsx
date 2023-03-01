@@ -57,10 +57,10 @@ const Header: React.FC = () => {
     setShowFAQ(true);
   };
 
-  const toggleAnswer = (questionId) => {
+  const toggleAnswer = (questionId:any) => {
     setShowAnswers({
       ...showAnswers,
-      [questionId]: !showAnswers[questionId],
+      [questionId]: !(showAnswers as any)[questionId],
     });
   };
 
@@ -264,7 +264,7 @@ const Header: React.FC = () => {
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
                         >
-                          {showAnswers[question.id] ? (
+                          {(showAnswers as any)[question.id] ? (
                             <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
@@ -285,7 +285,7 @@ const Header: React.FC = () => {
                         {question.question}
                       </div>
                     </div>
-                    {showAnswers[question.id] && (
+                    {(showAnswers as any)[question.id] && (
                       <div className="ml-8 mt-3 text-gray-600">
                         {question.answer}
                       </div>
