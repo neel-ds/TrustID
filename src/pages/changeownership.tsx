@@ -9,7 +9,7 @@ import ProductDetail from "../components/product-detail";
 import { useDisclosure, useToast } from "@chakra-ui/react";
 import { QRCode } from "react-qr-svg";
 import landABI from "../contracts/land.json";
-import ABI from "../contracts/PolygonID_ABI.json";
+import ABI from "../contracts/polygonID_ABI.json";
 import {
   useContractEvent,
   usePrepareContractWrite,
